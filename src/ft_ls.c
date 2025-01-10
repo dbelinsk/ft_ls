@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 12:39:22 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/06 11:35:16 by dbelinsk         ###   ########.fr       */
+/*   Created: 2025/01/10 12:18:55 by dbelinsk          #+#    #+#             */
+/*   Updated: 2025/01/10 12:33:06 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <time.h>
-#include <libft.h>
+#include "ft_ls.h"
 
-void		format_time(char *ftime, time_t mtime)
+
+
+void			ft_ls(t_opt *opt, char *path, char **err, char **reg, char **dir)
 {
-	time_t		time_now;
-	char		*str;
-	char		**arr;
-	
-	ft_bzero(ftime, 13);
-	time_now = time(NULL);
-	str = ctime(&mtime);
-	ft_memcpy(ftime, str + 4, 7);
-	if (time_now - mtime > 15552000)
-		ft_memcpy(ftime + 7, str + 19, 5);
-	else
-		ft_memcpy(ftime + 7, str + 11, 5);
+	/* if (err)
+		print_err_arr(err);
+	if (reg)
+		print_reg_arr(reg, path, opt);
+	if (dir)
+		print_dir_arr(dir, path, opt); */
 }

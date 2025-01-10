@@ -3,66 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   opt.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 12:40:58 by dbelinsk          #+#    #+#             */
-/*   Updated: 2024/12/31 13:32:27 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/08 21:14:50 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "libft.h"
 #include <errno.h>
+#include <stdio.h>
 
-static void		set_short_opt(t_opt **opt, char *arg)
+static void		add_opt(t_opt **opt, char *arg)
 {
-	int i;
-
-	i = 1;
-	while (arg[i])
+	while (*(++arg))
 	{
-		if (arg[i] == 'l')
+		if (*arg == 'l')
 			(*opt)->l = 1;
-		else if (arg[i] == 'R')
+		else if (*arg == 'R')
 			(*opt)->R = 1;
-		else if (arg[i] == 'a')
+		else if (*arg == 'a')
 			(*opt)->a = 1;
-		else if (arg[i] == 'r')
+		else if (*arg == 'r')
 			(*opt)->r = 1;
-		else if (arg[i] == 't')
+		else if (*arg == 't')
 			(*opt)->t = 1;
+		else if (*arg == '-')
+			return (unrecognized_option_error(arg));
 		else
-			return (short_opt_error(arg[i]));
-		i++;
+			return (invalid_option_error(*arg));
+		//arg++;
 	}
 }
 
-static void		set_long_opt(t_opt **opt, char *arg)
-{
-	if (ft_strcmp(arg, "--all") == 0)
-		(*opt)->a = 1;
-	else if (ft_strcmp(arg, "--recursive") == 0)
-		(*opt)->R = 1;
-	else if (ft_strcmp(arg, "--reverse") == 0)
-		(*opt)->r = 1;
-	else if (ft_strcmp(arg, "--time") == 0)
-		(*opt)->t = 1;
-	else
-		return (long_opt_error(arg));
-}
-
-static int is_opt(char *arg)
-{
-	if (!arg || !ft_strlen(arg))
-		return (0);
-	if (ft_strlen(arg) == 1 && arg[0] == '-')
-		return (0);
-	if (arg[0] == '-')
-		return (1);
-	return (0);
-}
-
-static t_opt	*init_opt()
+t_opt	*init_opt()
 {
 	t_opt *opt;
 	
@@ -76,22 +51,11 @@ static t_opt	*init_opt()
 	return (opt);
 }
 
-void	set_opt(t_opt **opt, char **arg)
+void	set_opt(t_opt **opt, char *arg)
 {
 	if (!(*opt))
 		if (!((*opt) = init_opt()))
 			return ;
-	for (int i = 0; arg[i] && !errno; i++)
-	{
-		if (ft_strcmp(arg[i], "--help") == 0)
-			 return help();
-		if (is_opt(arg[i]))
-		{
-			if (arg[i][0] == '-' && arg[i][1] != '-')
-				set_short_opt(opt, arg[i]);
-			else if (arg[i][0] == '-' && arg[i][1] == '-')
-				set_long_opt(opt, arg[i]);
-		}	
-	}
+	add_opt(opt, arg);
 }
 	
