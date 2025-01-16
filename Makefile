@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+         #
+#    By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 13:20:29 by dbelinsk          #+#    #+#              #
-#    Updated: 2024/12/31 13:07:25 by dbelinsk         ###   ########.fr        #
+#    Updated: 2025/01/16 14:44:54 by dbelinsk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=ft_ls
 
-COMP_FLAG=#-Wall -Wextra -Werror
+COMP_FLAG=-Wall -Wextra -Werror
 
 SRC_PATH=./src/
 OBJ_PATH=./.obj/

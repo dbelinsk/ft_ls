@@ -6,16 +6,14 @@
 /*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 12:40:58 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/08 21:14:50 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:35:15 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include "libft.h"
-#include <errno.h>
-#include <stdio.h>
+#include <stdlib.h>
 
-static void		add_opt(t_opt **opt, char *arg)
+static int		add_opt(t_opt **opt, char *arg)
 {
 	while (*(++arg))
 	{
@@ -30,11 +28,16 @@ static void		add_opt(t_opt **opt, char *arg)
 		else if (*arg == 't')
 			(*opt)->t = 1;
 		else if (*arg == '-')
-			return (unrecognized_option_error(arg));
+		{
+			if (!*(arg + 1))
+				return (usage_error());
+			else
+				return (unrecognized_option_error(arg));
+		}
 		else
 			return (invalid_option_error(*arg));
-		//arg++;
 	}
+	return (1);
 }
 
 t_opt	*init_opt()
@@ -51,11 +54,11 @@ t_opt	*init_opt()
 	return (opt);
 }
 
-void	set_opt(t_opt **opt, char *arg)
+int	set_opt(t_opt **opt, char *arg)
 {
 	if (!(*opt))
 		if (!((*opt) = init_opt()))
-			return ;
-	add_opt(opt, arg);
+			return 0;
+	return (add_opt(opt, arg));
 }
 	

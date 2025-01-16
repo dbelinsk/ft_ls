@@ -6,13 +6,12 @@
 /*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:51:51 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/09 12:21:15 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:40:42 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include "libft.h"
-#include <stdio.h>
+#include <errno.h>
 
 void		path_error(char *dir)
 {
@@ -30,26 +29,29 @@ void		permission_error(char *dir)
 	ft_putstr_fd(": Permission denied\n", 2);
 }
 
-void		short_opt_error(char *opt)
-{
-	errno = ENOENT;
-	ft_putstr_fd("ls: unrecognized option `", 2);
-	ft_putstr_fd(opt, 2);
-	ft_putstr_fd("'\n", 2);
-}
-
-void		unrecognized_option_error(char *opt)
+int			unrecognized_option_error(char *opt)
 {
 	errno = ENOENT;
 	ft_putstr_fd("ls: unrecognized option `-", 2);
 	ft_putstr_fd(opt, 2);
 	ft_putstr_fd("'\n", 2);
+	ft_putstr_fd("usage: ls [-Ralrt] [file ...]\n", 2);
+	return 0;
 }
 
-void		invalid_option_error(char opt)
+int			usage_error()
+{
+	errno = ENOENT;
+	ft_putstr_fd("usage: ls [-Ralrt] [file ...]\n", 2);
+	return 0;
+}
+
+int			invalid_option_error(char opt)
 {
 	errno = ENOENT;
 	ft_putstr_fd("ls: invalid option -- ", 2);
 	ft_putchar_fd(opt, 2);
 	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("usage: ls [-Ralrt] [file ...]\n", 2);
+	return 0;
 }

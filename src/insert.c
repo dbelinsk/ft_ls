@@ -6,7 +6,7 @@
 /*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:58:30 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/09 13:26:55 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:36:59 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,98 +16,65 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-static int			desc_cmp(char *cmp1, char *cmp2, char *path, int tcmp)
+static int			cmp(char *cmp1, char *cmp2, t_opt *opt, int sub_dir)
 {
-	if (!tcmp)
-		return (ft_strcmp(cmp1, cmp2) > 0 ? 1 : 0);
 	struct stat		st1;
 	struct stat		st2;
-	char			*tmp1;
-	char			*tmp2;
-	char			*aux;
-	int				scmp;
+	int				rst1;
+	int				rst2;
 	
-	//printf("comparing %s and %s\n", cmp1, cmp2);
-	scmp = ft_strcmp(cmp1, cmp2);
-	if (!tcmp)
-		return (scmp > 0 ? 1 : 0);
-	aux = ft_strjoin(path, "/");
-	tmp1 = ft_strjoin(aux, cmp1);
-	tmp2 = ft_strjoin(aux, cmp2);
-	if ( lstat(tmp1, &st1) < 0 || stat(tmp2, &st2) < 0)
+	if (sub_dir)
 	{
-		free(tmp1);
-		free(tmp2);
-		free(aux);
-		return (scmp < 0 ? 1 : 0);
+		rst1 = lstat(cmp1, &st1);
+		rst2 = lstat(cmp2, &st2);
+		if ( rst1 < 0 || rst2 < 0)
+		{
+			if (rst1 < 0 && rst2 < 0)
+				return (opt->r ? ft_strcmp(cmp2, cmp1) : ft_strcmp(cmp1, cmp2));
+			return (opt->r ? rst2 : rst1);
+		}
+		if (!S_ISDIR(st1.st_mode) || !S_ISDIR(st2.st_mode))
+		{
+			if (!S_ISDIR(st1.st_mode) && !S_ISDIR(st2.st_mode))
+				return (opt->r ? ft_strcmp(cmp2, cmp1) : ft_strcmp(cmp1, cmp2));
+			return (opt->r ? (S_ISDIR(st2.st_mode) ? 0 : -1) : (S_ISDIR(st1.st_mode) ? 0 : -1));	
+		}
 	}
-	free(tmp1);
-	free(tmp2);
-	free(aux);
+	if (!opt->t)
+		return (opt->r ? ft_strcmp(cmp2, cmp1) : ft_strcmp(cmp1, cmp2));
+	rst1 = lstat(cmp1, &st1);
+	rst2 = lstat(cmp2, &st2);
 	if (st1.st_mtime == st2.st_mtime)
-		return (scmp > 0 ? 1 : 0);
-	return (st1.st_mtime < st2.st_mtime ? 1 : 0);
+		return (opt->r ? ft_strcmp(cmp2, cmp1) : ft_strcmp(cmp1, cmp2));
+	return (opt->r ? st1.st_mtime - st2.st_mtime : st2.st_mtime - st1.st_mtime);
 }
 
-static int			asc_cmp(char *cmp1, char *cmp2, char *path, int tcmp)
+static int		get_in_point(char **arr, int size, char *fname, int sub_dir, t_opt *opt)
 {
-	if (!tcmp)
-		return (ft_strcmp(cmp1, cmp2) < 0 ? 1 : 0);
-	struct stat		st1;
-	struct stat		st2;
-	char			*tmp1;
-	char			*tmp2;
-	char			*aux;
-	int				scmp;
-	
-	//printf("comparing %s and %s\n", cmp1, cmp2);
-	scmp = ft_strcmp(cmp1, cmp2);
-	if (!tcmp)
-		return (scmp < 0 ? 1 : 0);
-	aux = ft_strjoin(path, "/");
-	tmp1 = ft_strjoin(aux, cmp1);
-	tmp2 = ft_strjoin(aux, cmp2);
-	if ( lstat(tmp1, &st1) < 0 || stat(tmp2, &st2) < 0)
-	{
-		free(tmp1);
-		free(tmp2);
-		free(aux);
-		return (scmp < 0 ? 1 : 0);
-	}
-	if (st1.st_mtime == st2.st_mtime)
-		return (scmp < 0 ? 1 : 0);
-	return (st1.st_mtime > st2.st_mtime ? 1 : 0);
-}
-
-static int	get_in_point(char **arr, int size, char *f, int tcmp, char *path, int(*cmp)(char*, char*, char *, int))
-{
-	int		in_point;
+	int		low;
+	int		high;
+	int		mid;
 
 	if (!arr)
-		return (0);
-	in_point = size / 2;
-	if (cmp(f, arr[in_point], path, tcmp))
-		while (in_point >= 0 && cmp(f, arr[in_point], path, tcmp))
-			in_point--;
-	else
-		while (in_point < (size - 1) && !cmp(f, arr[in_point], path, tcmp))
-			in_point++;
-	if (in_point < 0 || (in_point < size && !cmp(f, arr[in_point], path, tcmp)))
-		in_point++;
-	return (in_point);
+		return 0;
+	low = 0;
+	high = size - 1;
+	while (low <= high)
+	{
+		mid = low + ((high - low) >> 1);
+		cmp(fname, arr[mid], opt, sub_dir) < 0 ? (high = mid - 1) : (low = mid + 1);
+	}
+	return low;
 }
 
-void			insert(char ***arr, int *size, char *fname, char *path, t_opt *opt)
+void			insert(char ***arr, int *size, char *fname, t_opt *opt, int sub_dir)
 {
 	char 	**tmp;
 	int		in_point;
 
 	if (!(tmp = (char**)malloc(sizeof(char**) * (*size + 2))))
 			return ;
-	if (!opt->r)
-		in_point = get_in_point(*arr, *size, fname,opt->t, path, asc_cmp);
-	else
-		in_point = get_in_point(*arr, *size, fname,opt->t, path, desc_cmp);
+	in_point = get_in_point(*arr, *size, fname, sub_dir, opt);
 	tmp[in_point] = ft_strdup(fname);
 	if (*arr)
 	{
