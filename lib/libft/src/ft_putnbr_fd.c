@@ -6,7 +6,7 @@
 /*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 21:05:15 by dbelinsk          #+#    #+#             */
-/*   Updated: 2024/12/11 13:23:07 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/16 19:07:49 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		put_next_nbr(unsigned int n, int fd)
 {
-	if (n > 10)
+	if (n >= 10)
 		put_next_nbr(n / 10, fd);
 	ft_putchar_fd(n % 10 + '0', fd);
 }
