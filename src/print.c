@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
+/*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:50:42 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/16 14:50:45 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/17 15:37:14 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		put_nb(int nb, int maxLen)
 	len = get_nb_length(nb);
 	while (len++ < maxLen)
 		ft_putchar(' ');
-	ft_putnbr_fd(nb, STDIN_FILENO);
+	ft_putnbr_fd(nb, 1);
 	ft_putchar(' ');
 }
 
@@ -127,7 +127,7 @@ void		print_header(char *fname, int total, int l, int size)
 	if (l)
 	{
 		ft_putstr("total ");
-		ft_putnbr_fd(total, STDIN_FILENO);
+		ft_putnbr_fd(total, 1);
 		ft_putchar('\n');
 	}
 }
