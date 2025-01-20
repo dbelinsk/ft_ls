@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
+/*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:51:00 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/16 14:51:02 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:37:43 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,5 @@ void					ft_ls(t_opt *opt, char **arr, int size)
 		err && opt->R ? ft_putchar('\n') : 0;
 		nl = 1;
 	}
-	!opt->l &&nl && !opt->R ? ft_putchar('\n') : 0;
+	!opt->l &&nl && !opt->R && !err ? ft_putchar('\n') : 0;
 }
