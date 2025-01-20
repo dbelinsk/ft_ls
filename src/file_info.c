@@ -6,7 +6,7 @@
 /*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 13:47:09 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/20 12:05:31 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:28:52 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			set_paddings(int *paddings, char *path, char **arr)
 			else if((len = ft_strlen(getpwuid(st.st_uid)->pw_name)) > paddings[UID_PAD])
 				paddings[UID_PAD] = len;
 
-			if ((gid = getgrgid(st.st_gid)))
+			if (!(gid = getgrgid(st.st_gid)))
 			{
 				if ((len = get_nb_length(st.st_gid)) > paddings[GID_PAD])
 					paddings[GID_PAD] = len;
