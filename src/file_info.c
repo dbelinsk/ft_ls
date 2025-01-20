@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
+/*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 13:47:09 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/16 14:48:29 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:05:31 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
 #include <pwd.h>
 #include <grp.h>
 
@@ -40,8 +42,10 @@ void		set_permisions(char *perm, mode_t mode)
 
 void			set_paddings(int *paddings, char *path, char **arr)
 {
-	struct stat		st;
-	int				len;
+	struct stat				st;
+	int						len;
+	struct passwd			*uid;
+	struct group			*gid;
 
 	ft_bzero(paddings, sizeof(int) * 5);
 	while (arr && *arr)
@@ -52,9 +56,20 @@ void			set_paddings(int *paddings, char *path, char **arr)
 				break;
 			if (get_nb_length(st.st_nlink) > paddings[N_LINK_PAD])
 				paddings[N_LINK_PAD] = get_nb_length(st.st_nlink);
-			if ((len = ft_strlen(getpwuid(st.st_uid)->pw_name)) > paddings[UID_PAD])
+			if (!(uid = getpwuid(st.st_uid)))
+			{
+				if ((len = get_nb_length(st.st_uid)) > paddings[UID_PAD])
+					paddings[UID_PAD] = len;
+			}
+			else if((len = ft_strlen(getpwuid(st.st_uid)->pw_name)) > paddings[UID_PAD])
 				paddings[UID_PAD] = len;
-			if ((len = ft_strlen(getgrgid(st.st_gid)->gr_name)) > paddings[GID_PAD])
+
+			if ((gid = getgrgid(st.st_gid)))
+			{
+				if ((len = get_nb_length(st.st_gid)) > paddings[GID_PAD])
+					paddings[GID_PAD] = len;
+			}
+			else if ((len = ft_strlen(getgrgid(st.st_gid)->gr_name)) > paddings[GID_PAD])
 				paddings[GID_PAD] = len;
 			if (get_nb_length(st.st_size) > paddings[SIZE_PAD])
 				paddings[SIZE_PAD] = get_nb_length(st.st_size);
