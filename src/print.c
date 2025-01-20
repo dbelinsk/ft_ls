@@ -6,7 +6,7 @@
 /*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:50:42 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/17 15:37:14 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:29:13 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void		put_uid(uid_t uid, int maxLen)
 	struct passwd	*pwd;
 
 	if (!(pwd = getpwuid(uid)))
-		put_str("", maxLen);
+		put_nb(uid, maxLen);
 	else
 		put_str(pwd->pw_name, maxLen);
 }
@@ -63,7 +63,7 @@ static void		put_gid(gid_t gid, int maxLen)
 	struct group	*grp;
 	
 	if (!(grp = getgrgid(gid)))
-		put_str("", maxLen);
+		put_nb(gid, maxLen);
 	else
 		put_str(grp->gr_name, maxLen);
 }
