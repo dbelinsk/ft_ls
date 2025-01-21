@@ -6,15 +6,18 @@
 /*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 12:40:58 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/16 14:35:15 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:06:51 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "libft.h"
 #include <stdlib.h>
 
 static int		add_opt(t_opt **opt, char *arg)
 {
+	if (!ft_strcmp(arg, "--"))
+		return (1);
 	while (*(++arg))
 	{
 		if (*arg == 'l')
