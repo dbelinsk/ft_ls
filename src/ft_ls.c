@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:51:00 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/20 12:37:43 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:00:25 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ static int				list_dir_v2(t_opt *opt, char *name, int *paddings, int size)
 	if (opt->R)
 		recursive(opt, arr, arr_size);
 	clean_arr(arr, arr_size);
-	return 0;
+	return (arr_size > 0 ? 0 : 1);
 }
 
 void					ft_ls(t_opt *opt, char **arr, int size)
