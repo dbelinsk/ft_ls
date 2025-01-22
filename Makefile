@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+         #
+#    By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 13:20:29 by dbelinsk          #+#    #+#              #
-#    Updated: 2025/01/21 10:43:52 by dbelinsk         ###   ########.fr        #
+#    Updated: 2025/01/22 15:15:15 by dbelinsk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

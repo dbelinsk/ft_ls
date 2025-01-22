@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+         #
+#    By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 13:20:58 by dbelinsk          #+#    #+#              #
-#    Updated: 2025/01/21 10:41:28 by dbelinsk         ###   ########.fr        #
+#    Updated: 2025/01/22 15:15:18 by dbelinsk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME		= 	libft.a
+NAME		= libft.a
 
-CC			= 	gcc
-FLAGS		= 	-c -Wall -Wextra -Werror
+CC			= gcc
+FLAGS		= -c -Wall -Wextra -Werror
 
 SRC_PATH=./src
 OBJ_PATH=./.obj/
