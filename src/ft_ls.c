@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
+/*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:51:00 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/20 14:00:25 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:04:33 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static int				list_dir_v2(t_opt *opt, char *name, int *paddings, int size)
 	char			*fpath;
 
 	if (!(dir = get_dir(name, opt->l, size)))
-		return 1;
+		return 0;
 	arr = NULL;
 	arr_size = 0;
 	while ((entry = readdir(dir)))
@@ -125,49 +125,49 @@ static int				list_dir_v2(t_opt *opt, char *name, int *paddings, int size)
 	}
 	set_paddings(paddings, name, arr);
 	print_header(name, paddings[TOTAL_BLOCK], opt->l, size);
-	print_dir(arr, size, paddings, opt);
+	print_dir(arr, arr_size, paddings, opt);
 	closedir(dir);
 	if (opt->R)
 		recursive(opt, arr, arr_size);
 	clean_arr(arr, arr_size);
-	return (arr_size > 0 ? 0 : 1);
+	return (arr_size);
 }
 
 void					ft_ls(t_opt *opt, char **arr, int size)
 {
 	struct stat		st;
+	struct stat		st2;
 	int				paddings[5];
 	int				i;
 	int				nl;
-	int				err;
 
 	set_paddings(paddings, NULL, arr);
 	i = 0;
 	nl = 0;
-	err = 0;
 	while (arr && arr[i])
 	{
 		if (set_stat(&st, arr[i]))
 		{
+			
 			if (S_ISDIR(st.st_mode))
 				break;
-			print_reg_file(arr[i], paddings, opt->l);
+			print_reg_file(arr[i++], paddings, opt->l);
+			if (arr[i] && !lstat(arr[i], &st2) && !S_ISDIR(st2.st_mode))
+				!opt->l ? ft_putchar(' ') : ft_putchar('\n');
 			nl = 1;
-			err = 0;
-		}
-		else
-			err = 1;
+			continue ;
+		}	
 		i++;
 	}
-	!opt->l &&nl ? ft_putchar('\n') : 0;
-	nl = 0;
+	nl ? ft_putstr("\n") : 0;
+	nl && opt->R ? ft_putstr("\n") : 0;
 	while (arr && arr[i])
 	{
-		(i && !err) || (opt->l && i > 1) ? ft_putchar('\n') : 0;
-		nl && !opt->l && !opt->R ? ft_putchar('\n') : 0;
-		err = list_dir_v2(opt, arr[i++], paddings, size);
-		err && opt->R ? ft_putchar('\n') : 0;
+		nl && !opt->R ? ft_putstr("\n") : 0;
+		if (list_dir_v2(opt, arr[i++], paddings, size) && !opt->R)
+			ft_putstr("\n");
+		opt->R && size > 1 && arr[i] ? ft_putstr("\n") : 0;
 		nl = 1;
 	}
-	!opt->l &&nl && !opt->R && !err ? ft_putchar('\n') : 0;
+		
 }

@@ -6,7 +6,7 @@
 /*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:50:42 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/20 11:29:13 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:50:59 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static void		plong(char *path, int *paddings)
 	put_nb(st.st_size, paddings[SIZE_PAD]);
 	put_time(st.st_mtime);
 	put_fname(path, st.st_mode);
-	ft_putchar('\n');
+	//ft_putchar('\n');
 }
 
 static void		pshort(char *fname)
@@ -114,7 +114,7 @@ static void		pshort(char *fname)
 
 	name = ft_strrchr(fname, '/');
 	name ? ft_putstr(name + 1) : ft_putstr(fname);
-	ft_putchar(' ');
+	//ft_putchar(' ');
 }
 
 void		print_header(char *fname, int total, int l, int size)
@@ -142,7 +142,13 @@ void		print_reg_file(char *fname, int *paddings, int l)
 
 void		print_dir(char **arr, int size, int *paddings, t_opt *opt)
 {
+	char	c;
 	while (arr && *arr)
+	{
 		print_reg_file(*(arr++), paddings, opt->l);
-	size && opt->R && !opt->l ? ft_putchar('\n') : 0;
+		opt->l ? (c = '\n') : (c = ' ');
+		if (*arr)
+			ft_putchar(c);
+	}
+	opt->R && size ? ft_putstr("\n") : 0;
 }
