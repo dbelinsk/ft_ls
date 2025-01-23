@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:50:42 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/22 14:50:59 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:01:27 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,5 @@ void		print_dir(char **arr, int size, int *paddings, t_opt *opt)
 		if (*arr)
 			ft_putchar(c);
 	}
-	opt->R && size ? ft_putstr("\n") : 0;
+	opt->R && size ? ft_putchar('\n') : 0;
 }

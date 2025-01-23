@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbelinsk <dbelinsk@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:51:00 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/22 15:04:33 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/23 12:59:38 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,14 +159,14 @@ void					ft_ls(t_opt *opt, char **arr, int size)
 		}	
 		i++;
 	}
-	nl ? ft_putstr("\n") : 0;
-	nl && opt->R ? ft_putstr("\n") : 0;
+	nl ? ft_putchar('\n') : 0;
+	nl && opt->R && arr[i]? ft_putchar('\n') : 0;
 	while (arr && arr[i])
 	{
-		nl && !opt->R ? ft_putstr("\n") : 0;
+		nl && !opt->R ? ft_putchar('\n') : 0;
 		if (list_dir_v2(opt, arr[i++], paddings, size) && !opt->R)
-			ft_putstr("\n");
-		opt->R && size > 1 && arr[i] ? ft_putstr("\n") : 0;
+			ft_putchar('\n');
+		opt->R && size > 1 && arr[i] ? ft_putchar('\n') : 0;
 		nl = 1;
 	}
 		
