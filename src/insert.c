@@ -6,7 +6,7 @@
 /*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:58:30 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/21 15:36:59 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:02:26 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,13 @@ static int			cmp(char *cmp1, char *cmp2, t_opt *opt, int sub_dir)
 		if (!S_ISDIR(st1.st_mode) || !S_ISDIR(st2.st_mode))
 		{
 			if (!S_ISDIR(st1.st_mode) && !S_ISDIR(st2.st_mode))
-				return (opt->r ? ft_strcmp(cmp2, cmp1) : ft_strcmp(cmp1, cmp2));
+			{
+				if (!opt->t)
+					return (opt->r ? ft_strcmp(cmp2, cmp1) : ft_strcmp(cmp1, cmp2));
+				if (st1.st_mtime == st2.st_mtime)
+					return (opt->r ? ft_strcmp(cmp2, cmp1) : ft_strcmp(cmp1, cmp2));
+				return (opt->r ? st1.st_mtime - st2.st_mtime : st2.st_mtime - st1.st_mtime);
+			}
 			return ((S_ISDIR(st1.st_mode) ? 0 : -1));	
 		}
 	}
