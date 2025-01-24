@@ -6,7 +6,7 @@
 /*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 12:40:58 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/24 11:56:11 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/24 12:10:53 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static int		add_opt(t_opt **opt, char *arg)
 {
 	if (!ft_strcmp(arg, "--"))
-		return (1);
+		return (0);
 	while (*(++arg))
 	{
 		if (*arg == 'l')

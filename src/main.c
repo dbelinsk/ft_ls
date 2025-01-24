@@ -6,7 +6,7 @@
 /*   By: dbelinsk <dbelinsk42@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:20:12 by dbelinsk          #+#    #+#             */
-/*   Updated: 2025/01/24 11:46:54 by dbelinsk         ###   ########.fr       */
+/*   Updated: 2025/01/24 12:12:43 by dbelinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ int		main(int ac, char **av)
 	arr_size = 0;
 	i = 1;
 	while (av[i] && ft_strlen(av[i]) > 1 && av[i][0] == '-' )
-	{
 		if (!set_opt(&opt, av[i++]))
-			return (clean_and_exit(opt,arr, errno));
-	}
+			break ;
 	while (av[i])
 		insert(&arr, &arr_size, av[i++], opt, 1);
 	if (!arr)
